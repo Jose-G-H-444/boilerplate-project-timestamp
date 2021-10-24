@@ -5,6 +5,7 @@
 var express = require('express');
 var app = express();
 var myApp = require('./myApp');
+const routes = require('./routes/routes');
 require('dotenv').config();
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
@@ -20,6 +21,7 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.use('/', routes);
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
