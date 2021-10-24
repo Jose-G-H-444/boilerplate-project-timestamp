@@ -1,3 +1,19 @@
-exports.hello = (req, res) => {
-res.json({greeting: 'hello API'});
+const timestamp = require('unix-timestamp');
+const validator = require('is-my-date-valid')
+const validate = validator({ format: 'YYYY-MM-DD' })
+const dateTime = require('date-and-time');
+
+function isNumeric(str) {
+    if (typeof str != "string") return false // we only process strings!  
+    return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
+           !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
+}
+
+exports.date = (req, res) => {
+    const date = req.params.date;
+    console.log(parseInt('944006400', 10));
+    const format =  'ddd, DD MMM YYYY HH:mm:ss';
+    validate(date) ? res.json({ unix: timestamp.fromDate(new Date(date)), utc: dateTime.format(new Date(date), format, true) + ' GMT'}) :
+    isNumeric(date) ? res.json({ unix: parseInt(date, 10), utc: dateTime.format(new Date(parseInt(date, 10) * 1000), format, true) + ' GMT'}) :
+    res.send('INVALID INPUT, ENTER <UNIX-TIMESTAMP> OR <YYYY-MM-DD>');
 };
