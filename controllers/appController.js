@@ -8,10 +8,10 @@ function isNumeric(str) {
 }
 
 exports.date = (req, res) => {
-    const date = req.params.date;
-    console.log(parseInt('944006400', 10));
+    const input = req.params.date;
+    const date = new Date(input);
     const format =  'ddd, DD MMM YYYY HH:mm:ss';
-    timestamp.fromDate(new Date(date)) ? res.json({ unix: timestamp.fromDate(new Date(date)) / 1000, utc: dateTime.format(new Date(date), format, true) + ' GMT'}) :
-    isNumeric(date) ? res.json({ unix: parseInt(date, 10) / 1000, utc: dateTime.format(new Date(parseInt(date, 10) * 1000), format, true) + ' GMT'}) :
+    timestamp.fromDate(date) ? res.json({ unix: timestamp.fromDate(date) * 1000 - 28800000, utc: dateTime.format(date, format, false) + ' GMT'}) :
+    isNumeric(input) ? res.json({ unix: parseInt(input, 10), utc: dateTime.format(new Date(parseInt(input, 10)), format, true) + ' GMT'}) :
     res.send('INVALID INPUT, ENTER <UNIX-TIMESTAMP> OR <YYYY-MM-DD>');
 };
