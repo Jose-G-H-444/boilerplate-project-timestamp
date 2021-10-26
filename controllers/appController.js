@@ -13,5 +13,5 @@ exports.date = (req, res) => {
     const format =  'ddd, DD MMM YYYY HH:mm:ss';
     timestamp.fromDate(date) ? res.json({ unix: timestamp.fromDate(date) * 1000 - 28800000, utc: dateTime.format(date, format, false) + ' GMT'}) :
     isNumeric(input) ? res.json({ unix: parseInt(input, 10), utc: dateTime.format(new Date(parseInt(input, 10)), format, true) + ' GMT'}) :
-    res.send('INVALID INPUT, ENTER <UNIX-TIMESTAMP> OR <YYYY-MM-DD>');
+    res.json({ error: "Invalid Date"});
 };
