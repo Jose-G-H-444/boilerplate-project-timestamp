@@ -7,6 +7,7 @@ function isNumeric(str) {
 exports.date = (req, res) => {
     const input = req.params.date;
     let date;
+    !input ? date = new Date() :
     isNumeric(input) ? date = new Date(parseInt(input, 10)) : date = new Date(input);
     date != "Invalid Date" ? res.json({ unix: Date.parse(date), utc: date.toUTCString()}) :
     res.json({ error: "Invalid Date"});

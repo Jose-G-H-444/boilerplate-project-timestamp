@@ -3,6 +3,6 @@ const router = express.Router()
 const appController = require('../controllers/appController');
 
 // API Routes
-router.get("/api/:date", appController.date);
+router.get("/api/:date?", appController.date);
 
 module.exports = router;
